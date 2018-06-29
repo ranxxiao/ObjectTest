@@ -16,7 +16,7 @@ export default class Home extends Component{
 
     constructor() {
         super();
-        this.image = require('../../assets/dumbbell.jpg');
+        this.image = require('../../assets/redfox.jpeg');
         this.state = {result: ''}
     }
 
@@ -29,14 +29,22 @@ export default class Home extends Component{
         try {
             const tfImageRecognition = new TfImageRecognition({
                 model:require('../../assets/tensorflow_inception_graph.pb'),
-                labels: require('../../assets/tensorflow_labels.txt')
+                labels: require('../../assets/tensorflow_labels.txt'),
+                imageMean: 100,
             });
 
             const results = await tfImageRecognition.recognize({
                 image: this.image
             });
 
-            const resultText = `Name: ${results[0].name}\nConfidence: ${results[0].confidence.toFixed(2)}`
+            results.forEach(result =>
+            console.log(
+               result.id,
+               result.name,
+               result.confidence,
+            ));
+
+            const resultText = `Name0: ${results[0].name}\nConfidence0: ${results[0].confidence.toFixed(2)}\n\nName1: ${results[1].name}\nConfidence1: ${results[1].confidence.toFixed(2)}\n\nName2: ${results[2].name}\nConfidence2: ${results[2].confidence.toFixed(2)}`
             this.setState({result: resultText});
             await tfImageRecognition.close()
         } catch(err) {
@@ -71,7 +79,7 @@ const styles = StyleSheet.create({
         color: '#333333',
     },
     image: {
-        width: 400,
-        height: 300,
+        width: 300,
+        height: 200,
     },
 });
