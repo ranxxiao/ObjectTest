@@ -1,5 +1,5 @@
 under project:
-npm install
-react-native link
+npm install  
+react-native link                                       
 under ios:
 pod install
